@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class App {
 	
-	private int[][] field = new int[9][9];
+	private Field field;
 	private Difficulty dif;
 
 	enum Difficulty {
@@ -20,38 +20,18 @@ public class App {
 	}
 
 	public static void main (String[] args) {
-		new App();
+		//new App();
+		int[][] a = Field.generate(987654321);
+		for (int x = 0; x < 9; x++){
+			for (int y = 0; y < 9; y++)
+				System.err.printf("%d | %s", a[x][y], (y%3 == 2)? " " : "");
+			System.err.printf(" x = %d \n%s", x, (x%3 == 2)? "\n" : ""); 
+		}
 	}
 
 
 	public App () {
 		popup();
-	}
-
-	// HOW IN THE GODDAMN FUCK DO YOU GENERATE A SUDOKU FIELD?!
-	private int[][] generate () {
-		return null;
-	}
-
-
-	protected boolean check (int x, int y) {
-		// check block
-		int v = field[x][y], xOff = (int)Math.floor(x/3), yOff = (int)Math.floor(y/3);
-		for (int ix=0; ix<3; ix++) 
-			for (int iy=0; iy<3; iy++)
-				if (x%3 == ix && y%3 == iy)	continue;
-				else if (field[xOff+ix][yOff+iy] == v) return false;
-				else continue;
-		// check lines [Horizontal] [Vertical]
-		for (int ix = 0; ix < 9; ix++)
-			if (ix == x) continue;
-			else if (field[ix][y] == v) return false;
-			else continue;
-		for (int iy = 0; iy < 9; iy++)
-			if (iy == y) continue;
-			else if (field[x][iy] == v) return false;
-			else continue;
-		return true;
 	}
 
 	private void popup () {
